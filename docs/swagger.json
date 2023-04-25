@@ -27,6 +27,57 @@
                     }
                 }
             }
+        },
+        "/registration/customers": {
+            "get": {
+                "description": "Responds with the list of all customers as JSON.",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "customers"
+                ],
+                "summary": "Get customers array",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/main.customer"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "main.customer": {
+            "type": "object",
+            "properties": {
+                "country": {
+                    "type": "string"
+                },
+                "countrycode": {
+                    "type": "integer"
+                },
+                "customertype": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "phonenumber": {
+                    "type": "integer"
+                },
+                "verified": {
+                    "type": "string"
+                }
+            }
         }
     }
 }

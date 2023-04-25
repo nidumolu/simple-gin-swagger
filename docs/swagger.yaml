@@ -1,4 +1,22 @@
 basePath: /api/v1
+definitions:
+  main.customer:
+    properties:
+      country:
+        type: string
+      countrycode:
+        type: integer
+      customertype:
+        type: string
+      id:
+        type: string
+      name:
+        type: string
+      phonenumber:
+        type: integer
+      verified:
+        type: string
+    type: object
 info:
   contact: {}
 paths:
@@ -17,4 +35,19 @@ paths:
       summary: ping example
       tags:
       - example
+  /registration/customers:
+    get:
+      description: Responds with the list of all customers as JSON.
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/main.customer'
+            type: array
+      summary: Get customers array
+      tags:
+      - customers
 swagger: "2.0"
