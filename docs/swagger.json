@@ -82,6 +82,38 @@
                     }
                 }
             }
+        },
+        "/registration/customers/{id}": {
+            "get": {
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "getCustomerByID locates the customer whose ID value matches the id",
+                "operationId": "get-customer-by-id",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "customer ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/main.customer"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/main.message"
+                        }
+                    }
+                }
+            }
         }
     },
     "definitions": {
@@ -107,6 +139,14 @@
                     "type": "integer"
                 },
                 "verified": {
+                    "type": "string"
+                }
+            }
+        },
+        "main.message": {
+            "type": "object",
+            "properties": {
+                "message": {
                     "type": "string"
                 }
             }

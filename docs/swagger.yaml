@@ -17,6 +17,11 @@ definitions:
       verified:
         type: string
     type: object
+  main.message:
+    properties:
+      message:
+        type: string
+    type: object
 info:
   contact: {}
 paths:
@@ -71,4 +76,25 @@ paths:
       summary: Store a new customer
       tags:
       - newcustomer
+  /registration/customers/{id}:
+    get:
+      operationId: get-customer-by-id
+      parameters:
+      - description: customer ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/main.customer'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/main.message'
+      summary: getCustomerByID locates the customer whose ID value matches the id
 swagger: "2.0"

@@ -77,6 +77,32 @@ func PostCustomer(c *gin.Context) {
 	c.IndentedJSON(http.StatusCreated, customer)
 }
 
+// message represents request response with a message
+type message struct {
+	Message string `json:"message"`
+}
+
+// @Summary getCustomerByID locates the customer whose ID value matches the id
+// @ID get-customer-by-id
+// @Produce json
+// @Param id path string true "customer ID"
+// @Success 200 {object} customer
+// @Failure 404 {object} message
+// @Router /registration/customers/{id} [get]
+func getCustomerByID(c *gin.Context) {
+	id := c.Param("id")
+
+	// Loop through the list of customers, looking for
+	// an customer whose ID value matches the parameter.
+	for _, a := range customers {
+		if a.ID == id {
+			c.IndentedJSON(http.StatusOK, a)
+			return
+		}
+	}
+	c.IndentedJSON(http.StatusNotFound, gin.H{"message": "customer not found"})
+}
+
 func main() {
 	r := gin.Default()
 	docs.SwaggerInfo.BasePath = "/api/v1"
@@ -91,6 +117,7 @@ func main() {
 		{
 			reg.GET("/customers", GetCustomers)
 			reg.POST("/customers", PostCustomer)
+			reg.GET("/customers/:id", getCustomerByID)
 		}
 	}
 	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerfiles.Handler))
