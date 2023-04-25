@@ -49,6 +49,38 @@
                         }
                     }
                 }
+            },
+            "post": {
+                "description": "Takes a customer JSON and store in DB. Return saved JSON.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "newcustomer"
+                ],
+                "summary": "Store a new customer",
+                "parameters": [
+                    {
+                        "description": "customer Data",
+                        "name": "customer",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/main.customer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/main.customer"
+                        }
+                    }
+                }
             }
         }
     },

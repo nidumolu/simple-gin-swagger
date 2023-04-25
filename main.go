@@ -30,7 +30,7 @@ type customer struct {
 	Name         string `json:"name"`
 	PhoneNumber  int    `json:"phonenumber"`
 	Country      string `json:"country"`
-	CountryCode  int8   `json:"countrycode"`
+	CountryCode  int    `json:"countrycode"`
 	Verified     string `json:"verified"`
 	CustomerType string `json:"customertype"`
 }
@@ -54,6 +54,29 @@ func GetCustomers(c *gin.Context) {
 	c.IndentedJSON(http.StatusOK, customers)
 }
 
+// PostCustomer  godoc
+// @Summary                    Store a new customer
+// @Description                Takes a customer JSON and store in DB. Return saved JSON.
+// @Tags                       newcustomer
+// @Accept                     json
+// @Produce                    json
+// @Param                      customer body     customer true "customer Data"
+// @Success                    200  {object} customer
+// @Router                     /registration/customers [post]
+func PostCustomer(c *gin.Context) {
+	var customer customer
+
+	// Call BindJSON to bind the received JSON to
+	// newCustomer
+	if err := c.BindJSON(&customer); err != nil {
+		return
+	}
+
+	// Add the new customer to the slice.
+	customers = append(customers, customer)
+	c.IndentedJSON(http.StatusCreated, customer)
+}
+
 func main() {
 	r := gin.Default()
 	docs.SwaggerInfo.BasePath = "/api/v1"
@@ -67,6 +90,7 @@ func main() {
 		reg := v1.Group("/registration")
 		{
 			reg.GET("/customers", GetCustomers)
+			reg.POST("/customers", PostCustomer)
 		}
 	}
 	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerfiles.Handler))

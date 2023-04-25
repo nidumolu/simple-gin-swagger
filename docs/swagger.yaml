@@ -50,4 +50,25 @@ paths:
       summary: Get customers array
       tags:
       - customers
+    post:
+      consumes:
+      - application/json
+      description: Takes a customer JSON and store in DB. Return saved JSON.
+      parameters:
+      - description: customer Data
+        in: body
+        name: customer
+        required: true
+        schema:
+          $ref: '#/definitions/main.customer'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/main.customer'
+      summary: Store a new customer
+      tags:
+      - newcustomer
 swagger: "2.0"
